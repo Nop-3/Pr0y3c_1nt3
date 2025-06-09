@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crónica de un Proyecto: Portal Académico</title>
+    
+    <link rel="stylesheet" href="css/Blog.css"> 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  <!--Biblioteca cloud flare  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">  <!--Biblioteca Google apis  -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!--Biblioteca Gstatic  -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"> <!--Biblioteca Google apis  -->
+</head>
+<body>
+
+    <header>
+        <section class="contenedor-header">
+            <section class="logotipo">
+                <a href="index.html"> <img src="img/logo.png" alt="Logo Empresa"></a>
+            </section>
+            <section class="cabecera-elementos-derecha">
+                <section class="contenedor-nav">
+                    <nav class="enlaces">
+                        <ul>
+                            <li><a href="https://www.cesde.edu.co/programas/">Programas</a></li>
+                            <li><a href="https://www.cesde.edu.co/nosotros/">Nosotros</a></li>
+                           
+                            <li><a href="https://www.cesde.edu.co/contacto/">Contacto</a></li>
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="contenedor-menu-hamburguesa">
+                    <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+                    
+                    <label for="menu-toggle" class="icono-hamburguesa">
+                        <i class="fas fa-bars"></i>
+                    </label>
+                    
+                    <nav class="navegacion-desplegable">
+                         <ul>
+                            <li><a href="https://www.cesde.edu.co/programas/">Programas</a></li>
+                            <li><a href="https://www.cesde.edu.co/nosotros/">Nosotros</a></li>
+                          
+                            <li><a href="https://www.cesde.edu.co/contacto/">Contacto</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </section>
+        </section>
+    </header>
+
+    <article class="blog-container">
+        <h1>De la Idea a la Interacción: Parte de un Portal Académico</h1>
+        <p class="subtitle">Un resumen del viaje desde las maquetas estáticas de HTML hasta un prototipo funcional incluyendo lógica y BD</p>
+
+        <img src="img/logos.png" alt="Imagen de portada del proyecto" class="blog-image">
+       
+
+        <p>Hoy hemos emprendido un viaje fascinante: transformar un conjunto de ideas y páginas estáticas en un prototipo de aplicación web interactiva. El objetivo era claro: crear un portal donde un profesor pudiera gestionar notas y asistencias, y que un estudiante pudiera visualizar esa información. A continuación, desglosamos cada etapa de esta construcción.</p>
+
+        <h2>Paso 1: El Esqueleto con HTML</h2>
+        <p>Todo comenzó con la base de cualquier proyecto web: el <strong>HTML</strong>. Definimos la estructura semántica de nuestras tres vistas principales: la página de inicio, la interfaz del profesor y la del estudiante. Creamos tablas para los datos, formularios con campos <strong>`<input>`</strong> para que el profesor pudiera registrar las notas y menús de navegación para movernos entre las distintas secciones.</p>
+        <img src="img/HTMl.jpg" alt="Wireframe o estructura HTML de una tabla" class="blog-image">
+        <span class="caption">Imagen de referencia para maquetación</span>
+        <p>Un elemento clave fue la tabla de calificaciones, diseñada para ser intuitiva para el profesor, con columnas para cada momento y nota.</p>
+        <pre><code>&lt;table id="tabla-calificaciones"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th rowspan="2"&gt;Estudiante&lt;/th&gt;
+            &lt;th colspan="3"&gt;Momento 1 - 30%&lt;/th&gt;
+            &lt;!-- ... más cabeceras ... --&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Isabella García Rojas&lt;/td&gt;
+            &lt;td&gt;&lt;input type="number"&gt;&lt;/td&gt;
+            &lt;!-- ... más inputs ... --&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+        <h2>Paso 2: La Apariencia con CSS y Diseño Responsive</h2>
+        <p>Una estructura sin estilo es como un plano sin construir. Usando <strong>CSS</strong>, dimos vida al diseño. Sin embargo, el mayor desafío fue asegurar que la experiencia fuera óptima en cualquier dispositivo. Aquí es donde entró en juego el **diseño responsive**.</p>
+        <p>Mediante <strong>Media Queries</strong>, definimos reglas para que el diseño se adaptara a tablets y móviles. La tabla de notas, muy ancha para un celular, se transformó en un formato de "tarjetas" verticales, y el menú de navegación se colapsó en un ícono de hamburguesa funcional, ¡todo sin una sola línea de JavaScript!</p>
+        
+        <pre><code>/* El corazón del diseño responsive */
+@media (max-width: 768px) {
+    /* Ocultamos el menú de escritorio */
+    .contenedor-nav {
+        display: none;
+    }
+    /* Mostramos el ícono de hamburguesa */
+    .contenedor-menu-hamburguesa {
+        display: block;
+    }
+    /* Transformamos las filas de la tabla en bloques */
+    #registro-notas tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+    }
+    /* Ocultamos la cabecera original */
+    #registro-notas thead {
+        display: none;
+    }
+}</code></pre>
+
+        <h2>Paso 3: La Interactividad con JavaScript</h2>
+        <p>Aquí es donde el proyecto cobró vida. El reto era: ¿cómo puede la página del profesor "hablar" con la del estudiante sin un servidor? La solución fue utilizar la API de almacenamiento web del navegador: <strong>`localStorage`</strong>.</p>
+        <p>Creamos un script de <strong>JavaScript</strong> que hacía lo siguiente:</p>
+        <ol>
+            <li><strong>Guardar Datos:</strong> Al hacer clic en "Guardar", el script recorre la tabla del profesor, recoge los valores de cada `input` y los almacena como un objeto de texto en `localStorage`.</li>
+            <li><strong>Borrar Datos:</strong> La función de borrado limpia los `input` de una fila y vuelve a guardar el estado actualizado, haciendo el cambio permanente en la sesión.</li>
+            <li><strong>Cargar y Calcular:</strong> Al cargar la página del estudiante, el script lee los datos guardados, busca la información del estudiante correcto, y la usa para rellenar la tabla visual. Lo más importante, ejecuta el algoritmo para calcular la **nota final ponderada** (30%, 35%, 35%), mostrando al estudiante un resultado preciso y calculado al instante.</li>
+        </ol>
+
+        
+        <h2>Paso 4: El Cerebro con SQL</h2>
+        <p>Finalmente, dimos el salto conceptual hacia una aplicación real y robusta. Reconocimos que `localStorage` es una solución temporal y local. Para un sistema real, multiusuario y seguro, necesitamos un **backend** y una base de datos. Diseñamos la estructura de esta base de datos usando <strong>SQL</strong>.</p>
+        <p>Definimos tablas clave como `Usuarios`, `Cursos`, y `Escuelas`. </p>
+        <img src="img/Untitled.png" alt="Diagrama de la base de datos" class="blog-image">
+        <span class="caption">Diagrama entidad-relacion del proyecto
+    </span>
+        <p>Para hacer la base de datos más inteligente y segura, encapsulamos la lógica en **Stored Procedures (SP)**. Creamos procedimientos para tareas repetitivas y críticas, como añadir un nuevo usuario o permitir, filtrar los estudiantes por programa, etc.</p>
+        <pre><code>-- SP para un resumen genera de la BD.
+CREATE PROCEDURE sp_ObtenerResumenGeneral
+AS
+BEGIN
+    -- Esta consulta devuelve una única fila con varias columnas de conteo.
+    -- Cada SELECT dentro del SELECT principal es una subconsulta que calcula un valor.
+    SELECT
+        (SELECT COUNT(*) FROM Usuarios) AS TotalUsuarios,
+        (SELECT COUNT(*) FROM Usuarios WHERE Activo = 1) AS UsuariosActivos,
+        (SELECT COUNT(*) FROM Escuelas) AS TotalEscuelas,
+        (SELECT COUNT(*) FROM Cursos) AS TotalCursos,
+        (SELECT COUNT(*) FROM Inscripciones) AS TotalInscripciones;
+END;</code></pre>
+
+        <h2>Conclusión: Uniendo las Piezas</h2>
+        <p>Lo que comenzó como simples archivos HTML se ha convertido en el plano y prototipo de una aplicación web completa. Cada tecnología jugó un papel vital: HTML dio la estructura, CSS la belleza y adaptabilidad, JavaScript la interactividad inmediata, y SQL el diseño para un cerebro central, robusto y escalable. Este viaje demuestra cómo las diferentes capas de la web se unen para crear experiencias funcionales y significativas.</p>
+
+    </article>
+    <footer>
+    <section class="contenedor-pie-pagina">
+        <section class="redes-sociales">
+            <a href="https://www.facebook.com/Cesde/?locale=es_LA" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/encesde?lang=es" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/somoscesde/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://co.linkedin.com/company/cesde-formaci%C3%B3n-t%C3%A9cnica" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </section>
+        <section class="informacion-empresa">
+            
+            <p>Medellín: Carrera 42 # 48 - 20, Colombia.</p>
+            <p>Email: comunicaciones@cesde.edu.co| Teléfono: (604)4808822</p>
+            <p>&copy; © Copyright Cesde. Todos los derechos reservados.</p>
+        <br>
+        
+            <P>Creado por: Miguel Palomino</P>
+            <p>Proyecto de clases.</p>
+        </section>
+        </section>
+</footer>
+
+
+</body>
+</html>

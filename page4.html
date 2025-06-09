@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal del Estudiante</title>
+    <link rel="stylesheet" href="css/page2.css">  
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">    <!--Biblioteca cloud flare  -->
+</head>
+<body>
+    
+
+    <header>
+        <section class="contenedor-header">
+            <section class="logotipo">
+                <a href="index.html"> <img src="img/logo.png" alt="Logo Empresa"></a>
+            </section>
+            <section class="cabecera-elementos-derecha">
+                <nav class="enlaces">
+                    <ul>
+                        <li><a href="#vista-notas">Mis Notas</a></li>   
+                        <li><a href="#vista-asistencias">Otros cursos</a></li>
+                        <li><a href="Pagina2.html">Mi Perfil</a></li>
+                        <li><a href="https://edigital.cesde.edu.co/login/index.php">Ecesde</a></li>
+                    </ul>
+                </nav>
+                <section class="contenedor-menu-hamburguesa">
+                    <section class="icono-hamburguesa">
+                        <i class="fas fa-bars"></i>
+                    </section>
+                    <nav class="navegacion-desplegable">
+                        <ul class="enlaces-desplegable">
+                            <li><a href="">Perfil</a></li>
+                            <li><a href="">Generar ticket</a></li>
+                            <li><a href="index.html">Cerrar sesión</a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+            </section>
+        </section>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="profile-image">
+                <img src="img/img.jpg" alt="Foto del Estudiante">
+            </div>
+            <div class="profile-info">
+                <h2 id="student-name">Cargando...</h2>
+                <div class="info-item">
+                    <span class="info-label1">Programa:</span> Ingeniería de Sistemas.
+                </div>
+                <div class="info-item">
+                    <span class="info-label2">Semestre:</span> 4.
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <section class="espacio">
+            <h1>Mi Progreso Académico</h1>
+        </section>
+
+        <section id="vista-notas" class="content-semestre active">
+            <div class="table-container card">
+                <div class="table-header">
+                    <h3>Registro de Calificaciones</h3>
+                </div>
+                <table id="tabla-vista-notas">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Materia</th>
+                            <th colspan="3">Momento 1 (30%)</th>
+                            <th colspan="3">Momento 2 (35%)</th>
+                            <th colspan="3">Momento 3 (35%)</th>
+                            <th rowspan="2">Nota Final</th>
+                        </tr>
+                        <tr>
+                            <th>N1</th><th>N2</th><th>N3</th>
+                            <th>N1</th><th>N2</th><th>N3</th>
+                            <th>N1</th><th>N2</th><th>N3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section id="vista-asistencias">
+             <div class="table-container card">
+                <div class="table-header">
+                    <h3>Registro de Asistencias</h3>
+                </div>
+                <table id="tabla-vista-asistencias">
+                     <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+<footer>
+    <section class="contenedor-pie-pagina">
+        <section class="redes-sociales">
+            <a href="https://www.facebook.com/Cesde/?locale=es_LA" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/encesde?lang=es" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/somoscesde/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://co.linkedin.com/company/cesde-formaci%C3%B3n-t%C3%A9cnica" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </section>
+        <section class="informacion-empresa">
+            
+            <p>Medellín: Carrera 42 # 48 - 20, Colombia.</p>
+            <p>Email: comunicaciones@cesde.edu.co| Teléfono: (604)4808822</p>
+            <p>&copy; © Copyright Cesde. Todos los derechos reservados.</p>
+        <br>
+        
+            <P>Creado por: Miguel Palomino</P>
+            <p>Proyecto de clases.</p>
+        </section>
+        </section>
+</footer>
+
+
+
+<!-- Inicio de lógica JavaScript -->
+
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const nombreEstudiante = "Kelly Fonseca Gomez"; 
+            document.getElementById('student-name').innerText = nombreEstudiante;
+
+          
+            const datosNotasGuardadas = localStorage.getItem('calificacionesEstudiantes');
+            const cuerpoTablaNotas = document.querySelector('#tabla-vista-notas tbody');
+
+            
+            cuerpoTablaNotas.innerHTML = ''; 
+
+            if (datosNotasGuardadas) {
+                const datosEstudiantes = JSON.parse(datosNotasGuardadas);
+                
+                
+                const miEstudiante = datosEstudiantes.find(est => est.nombre === nombreEstudiante);
+                
+                if (miEstudiante) {
+                   
+                    const notas = miEstudiante.notas;
+                    const promM1 = (notas[0] + notas[1] + notas[2]) / 3;
+                    const promM2 = (notas[3] + notas[4] + notas[5]) / 3;
+                    const promM3 = (notas[6] + notas[7] + notas[8]) / 3;
+
+                    
+                    const notaFinal = (promM1 * 0.30) + (promM2 * 0.35) + (promM3 * 0.35);
+                    
+                    const filaHTML = `
+                        <tr>
+                            <td>Bases de datos*</td>
+                            <td>${notas[0].toFixed(1)}</td>
+                            <td>${notas[1].toFixed(1)}</td>
+                            <td>${notas[2].toFixed(1)}</td>
+                            <td>${notas[3].toFixed(1)}</td>
+                            <td>${notas[4].toFixed(1)}</td>
+                            <td>${notas[5].toFixed(1)}</td>
+                            <td>${notas[6].toFixed(1)}</td>
+                            <td>${notas[7].toFixed(1)}</td>
+                            <td>${notas[8].toFixed(1)}</td>
+                            <td class="nota-final">${notaFinal.toFixed(1)}</td>
+                        </tr>
+                    `;
+                    cuerpoTablaNotas.innerHTML += filaHTML; 
+                } else {
+                    cuerpoTablaNotas.innerHTML = '<tr><td colspan="11">No se encontraron notas para este estudiante.</td></tr>';
+                }
+            } else {
+                 cuerpoTablaNotas.innerHTML = '<tr><td colspan="11">Aún no hay calificaciones para mostrar.</td></tr>';
+            }
+
+
+            
+            const datosAsistenciaGuardada = localStorage.getItem('asistenciaEstudiantes');
+            const cuerpoTablaAsistencia = document.querySelector('#tabla-vista-asistencias tbody');
+            
+            
+            cuerpoTablaAsistencia.innerHTML = '';
+
+            if (datosAsistenciaGuardada) {
+                const datosAsistencia = JSON.parse(datosAsistenciaGuardada);
+                const miAsistencia = datosAsistencia.find(asis => asis.nombre === nombreEstudiante);
+
+                if (miAsistencia) {
+                    const filaAsistenciaHTML = `
+                        <tr>
+                            <td>${miAsistencia.fecha}</td>
+                            <td>${miAsistencia.estado}</td>
+                        </tr>
+                    `;
+                    cuerpoTablaAsistencia.innerHTML += filaAsistenciaHTML;
+                } else {
+                    cuerpoTablaAsistencia.innerHTML = '<tr><td colspan="2">No se encontró registro de asistencia.</td></tr>';
+                }
+            } else {
+                cuerpoTablaAsistencia.innerHTML = '<tr><td colspan="2">Aún no hay registro de asistencia.</td></tr>';
+            }
+        });
+    </script>
+</body>
+</html>
